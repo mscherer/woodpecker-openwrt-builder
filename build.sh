@@ -21,7 +21,7 @@ tar -xf openwrt-imagebuilder-*
 rm -f openwrt-imagebuilder-*.tar.${EXT}
 cd openwrt-imagebuilder-*
 
-make image EXTRA_IMAGE_NAME=${EXTRA_IMAGE_NAME} PROFILE=${PROFILE} DISABLED_SERVICES=${DISABLED_SERVICES} PACKAGES=${PACKAGES} FILES=${FILES}
+make image EXTRA_IMAGE_NAME="${EXTRA_IMAGE_NAME}" PROFILE="${PROFILE}" DISABLED_SERVICES="${DISABLED_SERVICES}" PACKAGES="${PACKAGES}" FILES="${FILES}"
 
 mv ./bin/targets/${TARGET}/${BOARD}/${IMAGE_NAME} ${CURRENT_DIR}/
 
