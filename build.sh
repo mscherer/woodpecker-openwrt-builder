@@ -17,7 +17,7 @@ CURRENT_DIR=$(pwd)
 EXT=zst
 IMAGE_NAME=openwrt-${RELEASE}-${EXTRA_IMAGE_NAME}-${TARGET}-${BOARD}-${PROFILE}-squashfs-sysupgrade.bin
 cd /tmp
-wget https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGET}/${BOARD}/openwrt-imagebuilder-${RELEASE}-${TARGET}-${BOARD}.Linux-x86_64.tar.${EXT}
+wget https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGET}/${BOARD}/openwrt-imagebuilder-${RELEASE}-${TARGET}-${BOARD}.$(uname -s)-$(uname -m).tar.${EXT}
 tar -xf openwrt-imagebuilder-*
 rm -f openwrt-imagebuilder-*.tar.${EXT}
 cd openwrt-imagebuilder-*
@@ -34,4 +34,3 @@ ls -l ${IMAGE_NAME}
 # TODO copy to the router
 # TODO run sysupgrade -v on the router
 # TODO embeded the current git short id in the name, as well as the date, see https://woodpecker-ci.org/docs/usage/environment
-# TODO support running on a arm builder
