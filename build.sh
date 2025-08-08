@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eux
 
+# TODO verify the file exist and show a proper error
 source builder.conf
 
 PROFILE=${PROFILE:-generic}
@@ -32,3 +33,5 @@ ls -l ${IMAGE_NAME}
 # TODO do some link to latest ?
 # TODO copy to the router
 # TODO run sysupgrade -v on the router
+# TODO embeded the current git short id in the name, as well as the date, see https://woodpecker-ci.org/docs/usage/environment
+# TODO support running on a arm builder
