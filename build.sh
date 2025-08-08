@@ -13,16 +13,15 @@ FILES=${FILES:-config}
 #TODO add potential templating with envsubst
 
 CURRENT_DIR=$(pwd)
-
 EXT=zst
 IMAGE_NAME=openwrt-${RELEASE}-${EXTRA_IMAGE_NAME}-${TARGET}-${BOARD}-${PROFILE}-squashfs-sysupgrade.bin
-
 cd /tmp
 wget https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGET}/${BOARD}/openwrt-imagebuilder-${RELEASE}-${TARGET}-${BOARD}.Linux-x86_64.tar.${EXT}
 tar -xf openwrt-imagebuilder-*
 rm -f openwrt-imagebuilder-*.tar.${EXT}
 cd openwrt-imagebuilder-*
-make image
+
+make image EXTRA_IMAGE_NAME=${EXTRA_IMAGE_NAME} PROFILE=${PROFILE}
 
 mv ./bin/targets/${TARGET}/${BOARD}/${IMAGE_NAME} ${CURRENT_DIR}/
 
