@@ -12,10 +12,12 @@ FILES=${FILES:-config}
 #TODO etape de preprocessing avec envsubst ?
 CURRENT_DIR=$(pwd)
 
+EXT=zst
+
 cd /tmp
-wget https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGET}/${BOARD}/openwrt-imagebuilder-${RELEASE}-${TARGET}-${BOARD}.Linux-x86_64.tar.zst
+wget https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGET}/${BOARD}/openwrt-imagebuilder-${RELEASE}-${TARGET}-${BOARD}.Linux-x86_64.tar.${EXT}
 tar -xf openwrt-imagebuilder-*
-rm -f openwrt-imagebuilder-*.tar.xz
+rm -f openwrt-imagebuilder-*.tar.${EXT}
 cd openwrt-imagebuilder-*
 make image
 cp  ./bin/targets/${TARGET}/${BOARD}/openwrt-${RELEASE}-${EXTRA_IMAGE_NAME}-{$TARGET}-${BOARD}-${PROFILE}-squashfs-sysupgrade.bin ${CURRENT_DIR}/
