@@ -25,6 +25,8 @@ make image EXTRA_IMAGE_NAME="${EXTRA_IMAGE_NAME}" PROFILE="${PROFILE}" DISABLED_
 
 mv ./bin/targets/${TARGET}/${BOARD}/${IMAGE_NAME} ${CURRENT_DIR}/
 
+sha256sum ${IMAGE_NAME}
+
 # TODO copy to the webserver that host the image
 # TODO do some link to latest ?
 # TODO copy to the router
