@@ -20,7 +20,7 @@ tar -xf openwrt-imagebuilder-*
 rm -f openwrt-imagebuilder-*.tar.${EXT}
 cd openwrt-imagebuilder-*
 make image
-cp  ./bin/targets/${TARGET}/${BOARD}/openwrt-${RELEASE}-${EXTRA_IMAGE_NAME}-{$TARGET}-${BOARD}-${PROFILE}-squashfs-sysupgrade.bin ${CURRENT_DIR}/
+cp  ./bin/targets/${TARGET}/${BOARD}/openwrt-${RELEASE}-${EXTRA_IMAGE_NAME}-${TARGET}-${BOARD}-${PROFILE}-squashfs-sysupgrade.bin ${CURRENT_DIR}/
 
 # resultat dans ./bin/targets/${TARGET}/${BOARD}/openwrt-${RELEASE}-${EXTRA_IMAGE_NAME}-{$TARGET}-$4BOARD}-${PROFILE}-squashfs-sysupgrade.bin
 # copie sur le routeur, et sysupgrade -v + le fichier
