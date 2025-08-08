@@ -16,7 +16,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout main
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Check the bash syntax
         run: |
           set -e
