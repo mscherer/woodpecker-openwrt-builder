@@ -29,6 +29,6 @@ make image EXTRA_IMAGE_NAME="${EXTRA_IMAGE_NAME}" PROFILE="${PROFILE}" DISABLED_
 mv ./bin/targets/${TARGET}/${BOARD}/ ${CURRENT_DIR}/build
 cd ${CURRENT_DIR}/build
 
+ls -l
 sha256sum ${IMAGE_NAME}
-ls -l ${IMAGE_NAME}
 # TODO embeded the current git short id in the name, as well as the date, see https://woodpecker-ci.org/docs/usage/environment
