@@ -1,0 +1,22 @@
+name: Check code and docker build
+on:
+  workflow_dispatch:
+  push:
+  pull_requests:
+
+jobs:
+  check_bash:
+    name: Build image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Check the bash syntax
+        run: |
+          set -e
+          bash -n build.sh
+
+      - name: Check docker build
+        run: |
+          docker build .

@@ -17,10 +17,6 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
-      - name: Check the bash syntax
-        run: |
-          set -e
-          bash -n build.sh 
       - name: Run the build
         run: |
           export DATE=$(date +%Y%m%d)
