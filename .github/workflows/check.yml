@@ -1,4 +1,4 @@
-name: Check code and docker build
+name: Check code
 on:
   workflow_dispatch:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   check_bash:
-    name: Build image
+    name: Check bash syntax
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main

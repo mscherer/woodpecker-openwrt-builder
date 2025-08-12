@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build image
+    name: Build image (and upload if needed)
     runs-on: ubuntu-latest
     permissions:
       contents: read
