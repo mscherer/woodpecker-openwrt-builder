@@ -2,7 +2,7 @@ name: Check code and docker build
 on:
   workflow_dispatch:
   push:
-  pull_requests:
+  pull_request:
 
 jobs:
   check_bash:
