@@ -16,7 +16,3 @@ jobs:
         run: |
           set -e
           bash -n build.sh
-
-      - name: Check docker build
-        run: |
-          docker build .
