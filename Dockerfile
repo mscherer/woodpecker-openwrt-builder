@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-minimal:44@sha256:05c03197356ca8311d20cc23e4bd21325dcb487f752dece1a0390fbce0cfb870
+FROM quay.io/fedora/fedora-minimal:44@sha256:d9cff5c9e15aef15f69c35da78387c61964e7b45e5b09851647b7ac1a4e72f67
 #
 # empty space for easier rebasing
 #
