@@ -35,3 +35,9 @@ podman build . -t openwrt
 cd $REPO_FOR_OPENWRT_CONFIG
 podman run --rm -w /woodpecker/ -v $PWD:/woodpecker/:Z -ti  localhost/openwrt
 ```
+
+# Customise the build before make
+
+If a file named `customise.sh` is present in the directory, it will be run before calling make.
+This can be used to avoid hardcoding secrets in the config file, using `envsubst` to file the file
+from environment variables (for example).

@@ -4,6 +4,8 @@ set -eux
 CONFIG_FILE=builder.conf
 [[ -f $CONFIG_FILE ]] || (echo "configuration $CONFIG_FILE not found" ; exit 1)
 
+CUSTOMISE_FILE=customise.sh
+
 [[ -v PLUGIN_SSH_KEY ]] || (echo "no ssh key found, please use ssh_key setting (and a secret)" ; exit 1)
 [[ -v PLUGIN_SERVER ]] || (echo "no destination server set, please use server setting" ; exit 1)
 [[ -v PLUGIN_TARGET ]] || (echo "no target directory set, please use target setting" ; exit 1)
@@ -25,6 +27,8 @@ wget https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGET}/${BOARD
 tar -xf openwrt-imagebuilder-*
 rm -f openwrt-imagebuilder-*.tar.${EXT}
 cd openwrt-imagebuilder-*
+
+[[ -f $CUSTOMISE_FILE ]] && . $CUSTOMISE_FILE
 
 make image EXTRA_IMAGE_NAME="${EXTRA_IMAGE_NAME}" PROFILE="${PROFILE}" DISABLED_SERVICES="${DISABLED_SERVICES}" PACKAGES="${PACKAGES}" FILES="${FILES}"
 
