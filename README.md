@@ -31,8 +31,10 @@ steps:
 With `podman`, the code can be tested with:
 
 ```
+# set TMPDIR if /var/tmp is full/readonly like on silverblue
 podman build . -t openwrt
 cd $REPO_FOR_OPENWRT_CONFIG
+# use -e for the configuration
 podman run --rm -w /woodpecker/ -v $PWD:/woodpecker/:Z -ti  localhost/openwrt
 ```
 
