@@ -32,6 +32,7 @@ cd openwrt-imagebuilder-*
 
 make image EXTRA_IMAGE_NAME="${EXTRA_IMAGE_NAME}" PROFILE="${PROFILE}" DISABLED_SERVICES="${DISABLED_SERVICES}" PACKAGES="${PACKAGES}" FILES="${FILES}"
 
+mkdir -p ${CURRENT_DIR}/build/
 mv ./bin/targets/${TARGET}/${BOARD}/ ${CURRENT_DIR}/build/${CI_REPO_NAME}
 cd ${CURRENT_DIR}/build
 
