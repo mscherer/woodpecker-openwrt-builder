@@ -27,7 +27,7 @@ tar -xf openwrt-imagebuilder-*
 rm -f openwrt-imagebuilder-*.tar.${EXT}
 cd openwrt-imagebuilder-*
 
-[[ -f ${SOURCE_DIR}/${CUSTOMISE_FILE} ]] && cd $SOURCE_DIR && . ${CUSTOMISE_FILE} && cd -
+[[ -f ${SOURCE_DIR}/${CUSTOMISE_FILE} ]] && ( cd $SOURCE_DIR ; . ${CUSTOMISE_FILE} ; cd - )
 
 make image EXTRA_IMAGE_NAME="${EXTRA_IMAGE_NAME}" PROFILE="${PROFILE}" DISABLED_SERVICES="${DISABLED_SERVICES}" PACKAGES="${PACKAGES}" FILES="${SOURCE_DIR}/${FILES}"
 
