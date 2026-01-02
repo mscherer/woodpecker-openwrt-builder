@@ -6,7 +6,7 @@ CONFIG_FILE=builder.conf
 
 [[ -v PLUGIN_SSH_KEY ]] && [[ -v PLUGIN_SERVER ]] && [[ -v PLUGIN_TARGET ]] && UPLOAD_FILE=1
 
-source builder.conf
+source ${CONFIG_FILE}
 
 PROFILE=${PROFILE:-generic}
 FILES=${FILES:-files}
