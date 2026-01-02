@@ -4,9 +4,7 @@ set -eux
 CONFIG_FILE=builder.conf
 [[ -f $CONFIG_FILE ]] || (echo "configuration $CONFIG_FILE not found" ; exit 1)
 
-[[ -v PLUGIN_SSH_KEY ]] || (echo "no ssh key found, please use ssh_key setting (and a secret)" ; exit 1)
-[[ -v PLUGIN_SERVER ]] || (echo "no destination server set, please use server setting" ; exit 1)
-[[ -v PLUGIN_TARGET ]] || (echo "no target directory set, please use target setting" ; exit 1)
+[[ -v PLUGIN_SSH_KEY ]] && [[ -v PLUGIN_SERVER ]] && [[ -v PLUGIN_TARGET ]] && UPLOAD_FILE=1
 
 source builder.conf
 
@@ -38,17 +36,20 @@ cd ${BUILD_DIR}
 ls -lR
 
 # TODO embed the current git short id in the name, as well as the date, see https://woodpecker-ci.org/docs/usage/environment
+if [[ -v UPLOAD_FILE ]]; then
+	# hardcoding is fine since that's in CI and throwaway container
+	KEYFILE=/tmp/ssh_key
+	# keep the double ${} for variable escaping, and the " for
+	# https://stackoverflow.com/questions/22101778/how-to-preserve-line-breaks-when-storing-command-output-to-a-variable
+	echo "${PLUGIN_SSH_KEY}" > $KEYFILE
+	chmod 700 $KEYFILE
 
-# hardcoding is fine since that's in CI and throwaway container
-KEYFILE=/tmp/ssh_key
-# keep the double ${} for variable escaping, and the " for
-# https://stackoverflow.com/questions/22101778/how-to-preserve-line-breaks-when-storing-command-output-to-a-variable
-echo "${PLUGIN_SSH_KEY}" > $KEYFILE
-chmod 700 $KEYFILE
+	REMOTE_USERNAME=""
+	if [ -n ${PLUGIN_USERNAME} ]; then
+		REMOTE_USERNAME="${PLUGIN_USERNAME}@"
+	fi;
 
-REMOTE_USERNAME=""
-if [ -n ${PLUGIN_USERNAME} ]; then
-	REMOTE_USERNAME="${PLUGIN_USERNAME}@"
-fi;
-
-scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" -i $KEYFILE -r -- "${CI_REPO_NAME}" "${REMOTE_USERNAME}${PLUGIN_SERVER}:/${PLUGIN_TARGET}"
+	scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" -i $KEYFILE -r -- "${CI_REPO_NAME}" "${REMOTE_USERNAME}${PLUGIN_SERVER}:/${PLUGIN_TARGET}"
+else
+	echo "No upload of the data, since no config have been provided"
+fi
