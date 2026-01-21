@@ -20,12 +20,24 @@ EXT=zst
 CUSTOMISE_FILE=customise.sh
 
 cd /tmp
-wget https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGET}/${BOARD}/openwrt-imagebuilder-${RELEASE}-${TARGET}-${BOARD}.$(uname -s)-$(uname -m).tar.${EXT}
+URL_PREFIX=https://downloads.openwrt.org/releases/${RELEASE}/targets/${TARGET}/${BOARD}/
+
+wget ${URL_PREFIX}/profiles.json
+jq -e .profiles.[\"$PROFILE\"] < profiles.json > /dev/null
+if [ $? -ne 0 ]; then
+  echo "Profile not found in profiles.json"
+  echo "Detected options:"
+  jq -M '.profiles|keys.[]' < profiles.json
+  exit 1
+fi;
+
+wget ${URL_PREFIX}/openwrt-imagebuilder-${RELEASE}-${TARGET}-${BOARD}.$(uname -s)-$(uname -m).tar.${EXT}
 tar -xf openwrt-imagebuilder-*
 rm -f openwrt-imagebuilder-*.tar.${EXT}
 cd openwrt-imagebuilder-*
 
 [[ -f ${SOURCE_DIR}/${CUSTOMISE_FILE} ]] && ( cd $SOURCE_DIR ; . ${CUSTOMISE_FILE} ; cd - )
+
 
 make image EXTRA_IMAGE_NAME="${EXTRA_IMAGE_NAME}" PROFILE="${PROFILE}" DISABLED_SERVICES="${DISABLED_SERVICES}" PACKAGES="${PACKAGES}" FILES="${SOURCE_DIR}/${FILES}"
 
