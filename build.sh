@@ -55,7 +55,7 @@ if [[ -v UPLOAD_FILE ]]; then
 
 	REMOTE_USERNAME=""
 	if [ -n ${PLUGIN_USERNAME} ]; then
-		REMOTE_USERNAME="-u ${PLUGIN_USERNAME}"
+		REMOTE_USERNAME="-u ${PLUGIN_USERNAME},"
 	fi;
 	echo "set sftp:auto-confirm yes" > ~/.lftprc
 	echo "set sftp:connect-program \"ssh -a -x -i $KEYFILE\"" >> ~/.lftprc
