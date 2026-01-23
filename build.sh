@@ -60,7 +60,7 @@ if [[ -v UPLOAD_FILE ]]; then
 	echo "set sftp:auto-confirm yes" > ~/.lftprc
 	echo "set sftp:connect-program \"ssh -a -x -i $KEYFILE\"" >> ~/.lftprc
 
-	lftp $REMOTE_USERNAME -e "mirror -R --no-perms ./${BOARD} $PLUGIN_TARGET; bye" sftp://$PLUGIN_SERVER
+	lftp $REMOTE_USERNAME -e "mirror -R --no-perms ./${BOARD}/ $PLUGIN_TARGET; bye" sftp://$PLUGIN_SERVER
 else
 	echo "No upload of the data, since no config have been provided"
 fi
