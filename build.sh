@@ -41,11 +41,8 @@ cd openwrt-imagebuilder-*
 
 make image EXTRA_IMAGE_NAME="${EXTRA_IMAGE_NAME}" PROFILE="${PROFILE}" DISABLED_SERVICES="${DISABLED_SERVICES}" PACKAGES="${PACKAGES}" FILES="${SOURCE_DIR}/${FILES}"
 
-BUILD_DIR="${SOURCE_DIR}/build/"
-mkdir -p ${BUILD_DIR}
-mv ./bin/targets/${TARGET}/${BOARD}/ ${BUILD_DIR}/${CI_REPO_NAME}
-cd ${BUILD_DIR}
-ls -lR
+cd ./bin/targets/${TARGET}/
+(cd "${BOARD}" ; ls -l . )
 
 # TODO embed the current git short id in the name, as well as the date, see https://woodpecker-ci.org/docs/usage/environment
 if [[ -v UPLOAD_FILE ]]; then
@@ -58,10 +55,12 @@ if [[ -v UPLOAD_FILE ]]; then
 
 	REMOTE_USERNAME=""
 	if [ -n ${PLUGIN_USERNAME} ]; then
-		REMOTE_USERNAME="${PLUGIN_USERNAME}@"
+		REMOTE_USERNAME="-u ${PLUGIN_USERNAME}"
 	fi;
+	echo "set sftp:auto-confirm yes" > ~/.lftprc
+	echo "set sftp:connect-program \"ssh -a -x -i $KEYFILE\"" >> ~/.lftprc
 
-	scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" -i $KEYFILE -r -- "${CI_REPO_NAME}" "${REMOTE_USERNAME}${PLUGIN_SERVER}:/${PLUGIN_TARGET}"
+	lftp $REMOTE_USERNAME -e "mirror -R --no-perms ./${BOARD} $PLUGIN_TARGET; bye" sftp://$PLUGIN_SERVER
 else
 	echo "No upload of the data, since no config have been provided"
 fi
